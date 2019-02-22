@@ -71,6 +71,7 @@ class SyncWorker(base.Worker):
                 continue
 
             except EnvironmentError as e:
+                import ipdb;ipdb.set_trace()
                 if e.errno not in (errno.EAGAIN, errno.ECONNABORTED,
                         errno.EWOULDBLOCK):
                     raise
@@ -81,6 +82,7 @@ class SyncWorker(base.Worker):
             try:
                 self.wait(timeout)
             except StopWaiting:
+                print("StopWaiting")
                 return
 
     def run_for_multiple(self, timeout):
@@ -90,6 +92,7 @@ class SyncWorker(base.Worker):
             try:
                 ready = self.wait(timeout)
             except StopWaiting:
+                print("StopWaiting")
                 return
 
             if ready is not None:
@@ -100,6 +103,7 @@ class SyncWorker(base.Worker):
                     try:
                         self.accept(listener)
                     except EnvironmentError as e:
+                        import ipdb;ipdb.set_trace()
                         if e.errno not in (errno.EAGAIN, errno.ECONNABORTED,
                                 errno.EWOULDBLOCK):
                             raise
